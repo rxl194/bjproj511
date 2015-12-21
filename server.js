@@ -1,5 +1,5 @@
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
 var express = require('./config/express');
 var PORT = process.env.PORT || 3000;
