@@ -42,6 +42,11 @@ exports.userByID = function(req, res, next, id) {
   });
 };
 
+exports.findOneByUserName = function(req, res, next) {
+  User.findOneByUserName('username', function(err, user) {
+  });
+};
+
 exports.update = function(req, res, next) {
   User.findByIdAndUpdate (req.user.id,
     req.body, function (err, user) {
@@ -62,5 +67,4 @@ exports.delete = function(req, res, next) {
     }
   });
 };
-
 
