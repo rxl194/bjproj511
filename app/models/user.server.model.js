@@ -113,7 +113,7 @@ function (username, suffix, callback) {
       callback(null);
     }
   });
-  this.findOne( {username: new ReqExp(username, 'i')}, callback);
+  this.findOne( {username: new RegExp(username, 'i')}, callback);
 };
 
 //UserSchema.post('save', function(next) {
