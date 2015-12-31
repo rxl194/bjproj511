@@ -1,5 +1,7 @@
 
 // server.js
+// https://scotch.io/tutorials/easy-node-authentication-facebook
+
 
 // set up ======================================================================
 // get all the tools we need
