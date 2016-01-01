@@ -132,14 +132,18 @@ module.exports = function(passport) {
         clientID        : configAuth.facebookAuth.clientID,
         clientSecret    : configAuth.facebookAuth.clientSecret,
         callbackURL     : configAuth.facebookAuth.callbackURL,
-        profileFields: ['id', 'email', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'verified']
+        profileFields: ['id', 'email', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'verified'],
+        passReqToCallback : true // allows us to pass in the req from our route (lets us check if a user is logged in or not)
     },
 
     // facebook will send back the token and profile
-    function(token, refreshToken, profile, done) {
+    function(req, token, refreshToken, profile, done) {
 
         // asynchronous
         process.nextTick(function() {
+
+				// check if the user is already logged in
+				if (!req.user) {
 
             // find the user in the database based on their facebook id
             User.findOne({ 'facebook.id' : profile.id }, function(err, user) {
@@ -179,6 +183,29 @@ module.exports = function(passport) {
                 }
 
             });
+
+					} else {
+						// user already exists and is logged in, we have to link accounts
+						var user = req.user; // pull the userout of the session
+
+						// update the current users facebook credentials
+						user.facebook.id = profile.id;
+						user.facebook.token = token;
+            user.facebook.name  = profile.name.givenName + ' ' + profile.name.familyName; 
+            user.facebook.email = profile.emails[0].value; 
+
+						var possibleUsername = profile.username || ((user.facebook.email) ? user.facebook.email.split('@')[0] : '');
+            user.facebook.username = possibleUsername;
+
+						// save the user
+						user.save(function(err) {
+							if (err)
+								throw err;
+							return done(null, user);
+						});						
+						
+					}
+
         });
 
     }));
