@@ -11,7 +11,6 @@ module.exports = function() {
     clientSecret: config.facebook.clientSecret,
     callbackURL: config.facebook.callbackURL,
     profileFields: ['id', 'email', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'verified'],
-    },
     passReqToCallback: true
   },
   function(req, accessToken, refreshToken, profile, done) {
@@ -19,11 +18,14 @@ module.exports = function() {
     providerData.accessToken = accessToken;
     providerData.refreshToken = refreshToken;
 
+    console.log('face_profile: ' + JSON.stringify(profile));
+
     var providerUserProfile = {
       firstName: profile.name.givenName,
       lastName: profile.name.familyName,
       fullName: profile.displayName,
       username: profile.username,
+      email: profile.emails[0].value,
       provider: 'facebook',
       providerId: profile.id,
       providerData: providerData

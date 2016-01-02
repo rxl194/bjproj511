@@ -64,9 +64,11 @@ UserSchema.virtual('fullName')
     return this.firstName + ' ' + this.lastName;
 })
 .set(function(fullName) {
+	if ( fullName ) {
     var splitName = fullName.split(' ');
     this.firstName = splitName[0] || ' ';
     this.lastName = splitName[1] || ' ';
+	}
 });
 
 UserSchema.pre('save', function(next) {

@@ -17,23 +17,24 @@ module.exports = function(app) {
 
   app.get('/signout', users.signout);
 
-  app.get('/oauth/facebook',
+  app.get('/auth/facebook',
 	  passport.authenticate('facebook', {
+      scope : 'email',
 			failureRedirect: '/signin'
 		}));
 
-	app.get('/oauth/facebook/callback',
+	app.get('/auth/facebook/callback',
 		passport.authenticate('facebook', {
 			failureRedirect: '/signin',
 			successRedirect: '/'
 		}));
 
-  app.get('/oauth/twitter',
+  app.get('/auth/twitter',
 	  passport.authenticate('twitter', {
 			failureRedirect: '/signin'
 		}));
 
-	app.get('/oauth/twitter/callback',
+	app.get('/auth/twitter/callback',
 		passport.authenticate('twitter', {
 			failureRedirect: '/signin',
 			successRedirect: '/'

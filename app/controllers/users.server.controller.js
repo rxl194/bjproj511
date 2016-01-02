@@ -75,32 +75,35 @@ exports.signout = function(req, res) {
 };
 
 exports.saveOAuthUserProfile = function(req, profile, done) {
-    User.findOne({
-	provider: profile.provider,
-	providerId: profile.providerId
-    }, function(err, user) {
-	if (err) {
-	    return done(err);
-	} else {
-	    if (!user) {
-		var possibleUsername = profile.username || ((profile.email) ? profile.email.split('@')[0] : '');
-		User.findUniqueUsername(possibleUsername, null, function(availableUsername) {
-		    profile.username = availableUsername;
-		    user = new User(profile);
-		    user.save(function(err) {
+	User.findOne({
+			provider: profile.provider,
+			providerId: profile.providerId
+		}, function(err, user) {
 			if (err) {
-			    var message = getErrorMessage(err);			
-			    req.flash('error', message);
-			    return res.redirect('/signup');
+				return done(err);
+			} else {
+	    	if (!user) {
+					var possibleUsername = profile.username || ((profile.email) ? profile.email.split('@')[0] : '');
+					User.findUniqueUsername(possibleUsername, null, function(availableUsername) {
+						profile.username = availableUsername;
+            console.log("availableUsername: " + availableUsername);
+						user = new User(profile);
+            console.log("new facebook User: " + user);
+						user.save(function(err) {
+						if (err) {
+							//var message = getErrorMessage(err);			
+							//req.flash('error', message);
+							//return res.redirect('/signup');
+							throw err;
+						}
+						return done(err, user);
+					});
+				});
+			} else {
+				return done(err, user);
 			}
-			return done(err, user);
-		    });
-		});
-	    } else {
-		return done(err, user);
-	    }
-	}
-    });
+		}
+	});
 };
 
 
