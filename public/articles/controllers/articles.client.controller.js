@@ -15,6 +15,7 @@ $scope.create = function() {
     $location.path('articles/' + response._id);
   }, function(errorResponse) {
     $scope.error = errorResponse.data.message;
+    console.log('articles.create.error: ' + $scope.error);
   });
 };
 
