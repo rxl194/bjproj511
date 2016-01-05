@@ -8,7 +8,7 @@ var mongoose = require('./config/mongoose'),
 var PORT = process.env.PORT || 3000;
 
 var db = mongoose();
-var app = express();
+var app = express(db);
 var passport = passport();
 
 app.listen(PORT);
