@@ -1,3 +1,13 @@
 #bjproj511
 
 MEAN Web Development Safaribook
+
+npm install
+
+sudo npm install -g bower
+vi bower.json
+vi .bowerrc
+bower install
+
+
+

@@ -39,5 +39,19 @@ module.exports = function(app) {
 			failureRedirect: '/signin',
 			successRedirect: '/'
 		}));
+
+	app.get('/auth/google', passport.authenticate('google', {
+  	failureRedirect: '/signin',
+  	scope: [
+    	'https://www.googleapis.com/auth/userinfo.profile',
+    	'https://www.googleapis.com/auth/userinfo.email'
+  	],
+	}));
+
+	app.get('/auth/google/callback', passport.authenticate('google', {
+  	failureRedirect: '/signin',
+  	successRedirect: '/'
+	}));
+
 };
 

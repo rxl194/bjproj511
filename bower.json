@@ -1,0 +1,20 @@
+{
+  "name": "MEAN",
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/lib/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4",
+    "angular-route": "~1.4",
+    "angular-resource": "~1.4"
+  }
+}
