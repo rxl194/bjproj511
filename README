@@ -2,12 +2,19 @@
 
 MEAN Web Development Safaribook
 
+npm install -g mocha
 npm install
 
 sudo npm install -g bower
 vi bower.json
 vi .bowerrc
-bower install
+bower install --allow-root
 
+NODE_ENV=test mocha --reporter spec app/tests
+
+npm install -g karma-cli
+
+sudo apt-get install libfontconfig libfontconfig-dev
+NODE_ENV=test karma start
 
 
